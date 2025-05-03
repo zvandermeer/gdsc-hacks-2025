@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import TaskItem from "./components/TaskItem";
+import ProgressBar from "./components/ProgressBar";
 
 function randomNotification() {
   const notifTitle = `This is a notification`;
@@ -48,52 +48,50 @@ function urlBase64ToUint8Array(base64String) {
 
 
 function App() {
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      title: "take a walk",
+      duration: "15 MINUTES",
+      time: "5PM",
+      checked: false,
+    },
+    {
+      id: 2,
+      title: "meditate",
+      duration: "20 MINUTES",
+      time: "3PM",
+      checked: false,
+    },
+    {
+      id: 3,
+      title: "study",
+      duration: "45 MINUTES",
+      time: "1PM",
+      checked: false,
+    },
+
+  ]);
+
+  const toggleCheck = (id) => {
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, checked: !task.checked } : task
+    );
+    setTasks(updatedTasks);
+  };
+  const numerator = tasks.filter(task => task.checked).length;
+  const denominator = tasks.length
   return (
-    <>
-      <button 
-        onClick={() => {
-          Notification.requestPermission().then((result) => {
-            if (result === "granted") {
-              randomNotification();
-            }
-          });
-        }}
-      >
-        Notify
-      </button>
-
-      <button
-        onClick={async () => {
-          if ('serviceWorker' in navigator && 'PushManager' in window) {
-            const registration = await registerServiceWorker();
-            await subscribeUser(registration);
-          } else {
-            alert("Push messaging is not supported in your browser.");
-          }
-        }}
-      >
-        register
-      </button>
-
-      <button
-        onClick={async () => {
-          const delay = 20;
-          await fetch(apiURL + '/schedule', {
-            method: 'POST',
-            body: JSON.stringify({
-              title: "Scheduled Notification",
-              body: "This was scheduled from the browser!",
-              delay
-            }),
-            headers: { 'Content-Type': 'application/json' }
-          });
-
-          alert("Notification scheduled!");
-        }}
-      >
-        Schedule
-      </button>
-    </>
+    <div className='flex flex-col justify-end min-h-screen pb-4'>
+      <div className="flex justify-center">
+      <ProgressBar numerator={numerator} denominator={denominator}/>
+      </div>
+      <p className='text-xs ml-16 font-semibold'>today's progress</p>
+      {tasks.map(task => (
+        <TaskItem key={task.id} task={task} onChange={() => toggleCheck(task.id)} />
+      ))}
+      
+    </div>
   )
 }
 
