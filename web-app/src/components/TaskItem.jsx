@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 import editButton from '../assets/Edit.svg';
 import deleteButton from '../assets/delete.svg';
 
-function TaskItem({ task, onChange, onClick }) {
-=======
 function TaskItem({ task, onChange, onClick, onDelete }) {
->>>>>>> a5a1608afaacace483189ebdc06c50baf008a594
     return (
       <div className="flex justify-between items-center p-3 max-w-md">
         <div className="flex items-center gap-4">
@@ -25,7 +21,7 @@ function TaskItem({ task, onChange, onClick, onDelete }) {
         </div>
   
         <div className="flex space-x-2">
-          <button className="text-sm" >Edit</button>
+          <button className="text-sm" ><Edit></button>
           <button className="text-sm" onClick={onDelete}>Delete</button>
         </div>
       </div>
