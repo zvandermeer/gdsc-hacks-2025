@@ -19,13 +19,14 @@ async function registerServiceWorker() {
 
 async function subscribeUser(registration) {
   const publicVapidKey = import.meta.env.VITE_VAPID_PUBLIC;
+  const apiURL = import.meta.env.VITE_API_URL;
 
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
   });
 
-  await fetch('https://fe04-131-104-23-190.ngrok-free.app/subscribe', {
+  await fetch(apiURL + '/subscribe', {
     method: 'POST',
     body: JSON.stringify(subscription),
     headers: { 'Content-Type': 'application/json' }
@@ -77,7 +78,7 @@ function App() {
       <button
         onClick={async () => {
           const delay = 20;
-          await fetch('https://fe04-131-104-23-190.ngrok-free.app/schedule', {
+          await fetch(apiURL + '/schedule', {
             method: 'POST',
             body: JSON.stringify({
               title: "Scheduled Notification",
