@@ -117,6 +117,10 @@ function App() {
     }
   };
   
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
   return (
     <>
     <Navbar/>
@@ -129,7 +133,13 @@ function App() {
       
       <div className="min-h-[210px] max-h-[210px] overflow-y-auto space-y-2">
         {tasks.map(task => (
-          <TaskItem key={task.id} task={task} onChange={() => toggleCheck(task.id)} onClick={(e) => handleBirdReaction(task, e)}/>
+          <TaskItem 
+          key={task.id} 
+          task={task} 
+          onChange={() => toggleCheck(task.id)} 
+          onClick={(e) => handleBirdReaction(task, e)}
+          onDelete={() => deleteTask(task.id)}
+          />
         ))}
       </div>
 

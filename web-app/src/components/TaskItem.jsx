@@ -1,4 +1,4 @@
-function TaskItem({ task, onChange, onClick }) {
+function TaskItem({ task, onChange, onClick, onDelete }) {
     return (
       <div className="flex justify-between items-center p-3 max-w-md">
         <div className="flex items-center gap-4">
@@ -18,8 +18,8 @@ function TaskItem({ task, onChange, onClick }) {
         </div>
   
         <div className="flex space-x-2">
-          <button className="text-sm">Edit</button>
-          <button className="text-sm">Delete</button>
+          <button className="text-sm" >Edit</button>
+          <button className="text-sm" onClick={onDelete}>Delete</button>
         </div>
       </div>
     );
