@@ -21,8 +21,8 @@ function TaskItem({ task, onChange, onClick, onDelete }) {
         </div>
   
         <div className="flex space-x-2">
-          <button className="text-sm" ><Edit></button>
-          <button className="text-sm" onClick={onDelete}>Delete</button>
+          <img src={editButton} alt="Edit" className="w-5 h-auto object-contain" />
+          <img src={deleteButton} alt="Delete" className="w-6 h-auto object-contain" />
         </div>
       </div>
     );
