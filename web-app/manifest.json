@@ -1,5 +1,6 @@
 {
     "name": "My PWA",
+    "display": "standalone",
     "icons": [
       {
         "src": "icon-512.png",
