@@ -3,6 +3,21 @@ import TaskItem from "./components/TaskItem";
 import ProgressBar from "./components/ProgressBar";
 import Navbar from './components/Navbar';
 import BirdFrame from './components/BirdFrame';
+import ApiCalendar from "react-google-calendar-api";
+
+const gcalClientId = import.meta.env.VITE_GCAL_CLIENT_ID;
+const gcalApiKey = import.meta.env.VITE_GCAL_API_KEY;
+
+const gcalConfig = {
+  clientId: gcalClientId,
+  apiKey: gcalApiKey,
+  scope: "https://www.googleapis.com/auth/calendar",
+  discoveryDocs: [
+    "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+  ],
+};
+
+const apiCalendar = new ApiCalendar(gcalConfig);
 
 function randomNotification() {
   const notifTitle = `This is a notification`;
@@ -109,7 +124,6 @@ function App() {
       </div>
       
     </div>
-
     </>
   )
 }
