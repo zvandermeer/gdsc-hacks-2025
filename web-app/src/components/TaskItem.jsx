@@ -1,3 +1,6 @@
+import editButton from '../assets/Edit.svg';
+import deleteButton from '../assets/delete.svg';
+
 function TaskItem({ task, onChange, onClick, onDelete }) {
     return (
       <div className="flex justify-between items-center p-3 max-w-md">
@@ -18,8 +21,8 @@ function TaskItem({ task, onChange, onClick, onDelete }) {
         </div>
   
         <div className="flex space-x-2">
-          <button className="text-sm" >Edit</button>
-          <button className="text-sm" onClick={onDelete}>Delete</button>
+          <button><img src={editButton} alt="Edit" className="w-5 h-auto object-contain"/></button>
+          <button onClick={onDelete}><img src={deleteButton} alt="Delete" className="w-6 h-auto object-contain"/></button>
         </div>
       </div>
     );

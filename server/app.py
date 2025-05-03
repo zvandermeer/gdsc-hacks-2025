@@ -7,12 +7,13 @@ import json
 from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
+import db
+from dateutil import parser
 
 app = Flask(__name__)
 # CORS(app, resources={r"/subscribe": {"origins": "http://localhost:5173"}})
 CORS(app)
 
-# Store subscriptions in-memory (use a DB in production)
 subscriptions = []
 
 load_dotenv()
@@ -23,6 +24,8 @@ VAPID_PRIVATE_KEY = os.getenv("VAPID_PRIVATE")
 # Scheduler
 scheduler = BackgroundScheduler()
 scheduler.start()
+
+myDb = db.DB('db.sqlite3')
 
 def send_push(subscription_info, data):
     endpoint = subscription_info['endpoint']
@@ -46,22 +49,29 @@ def send_push(subscription_info, data):
 
 @app.route("/subscribe", methods=["POST"])
 def subscribe():
-    subscription = request.get_json()
-    subscriptions.append(subscription)
+    response: dict = request.get_json()
+    subscription: dict = response.get("subscription")
+    uuid: str = response.get("uuid")
+    myDb.new_user(uuid, subscription)
     return jsonify({"status": "subscribed"}), 201
 
 @app.route("/schedule", methods=["POST"])
 def schedule_push():
     content = request.get_json()
-    delay = content.get("delay", 10)  # in seconds
+    
     data = {
         "title": content.get("title", "Hello!"),
         "body": content.get("body", "This is a scheduled push.")
     }
 
-    run_time = datetime.now() + timedelta(seconds=delay)
-    for sub in subscriptions:
-        scheduler.add_job(send_push, 'date', run_date=run_time, args=[sub, data])
+    run_time = dt = parser.parse(content.get("time"))
+    uuid: str = content.get("uuid")
+
+    print(run_time)
+    
+    subscription = myDb.get_subscription(uuid)
+
+    scheduler.add_job(send_push, 'date', run_date=run_time, args=[subscription, data])
 
     print("Scheduled:" + run_time.isoformat())
 
