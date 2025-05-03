@@ -133,10 +133,8 @@ function App() {
         ))}
       </div>
 
-      <div className="flex justify-center gap-3 mt-2 pt-3 pb-3 border-t">      
+      <div className="flex justify-center gap-3 mt-2 pt-4 pb-2 border-t">      
         <button type="add-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded">Add Task</button>
-        <button type="edit-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded">Edit Task</button>
-        <button type="delete-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded">Delete Task</button>
       </div>
       
     </div>
