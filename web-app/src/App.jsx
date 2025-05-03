@@ -108,19 +108,25 @@ function App() {
   return (
     <>
     <Navbar/>
+
     <BirdFrame birdState={'normal'}/>
-    <div className='flex flex-col justify-end min-h-screen pb-4'>
+
+    <div className='flex flex-col justify-end min-h-screen'>
       <div className="flex justify-center">
         <ProgressBar numerator={numerator} denominator={denominator}/>
       </div>
-      <p className='text-xs ml-16 font-semibold pb-2'>today's progress</p>
-      <div className="flex justify-center">      
-        <button type="button" className="text-black border-1 border-black font-medium text-sm w-20 rounded">Add a Task</button>
-      </div>
+      <p className='text-xs ml-12 font-semibold pt-0.5 pb-4'>today's progress</p>
+      
       <div className="min-h-[210px] max-h-[210px] overflow-y-auto space-y-2">
         {tasks.map(task => (
           <TaskItem key={task.id} task={task} onChange={() => toggleCheck(task.id)} />
         ))}
+      </div>
+
+      <div className="flex justify-center gap-3 mt-2 pt-3 pb-3 border-t">      
+        <button type="add-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded">Add Task</button>
+        <button type="edit-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded">Edit Task</button>
+        <button type="delete-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded">Delete Task</button>
       </div>
       
     </div>

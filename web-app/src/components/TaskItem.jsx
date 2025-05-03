@@ -4,7 +4,7 @@ function TaskItem({task, onChange}) {
             type = "checkbox"
             checked ={task.checked}
             onChange = {onChange}
-            className='border-4 border-black w-10 h-10 rounded-lg ml-11 accent-black'
+            className='aborder-4 border-black w-10 h-10 rounded-lg ml-11 accent-black'
         />
         <div>
             <p className='text-xs font-semibold uppercase tracking-tight text-black'>
