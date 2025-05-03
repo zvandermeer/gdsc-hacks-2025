@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import TaskItem from "./components/TaskItem";
 import ProgressBar from "./components/ProgressBar";
+import Navbar from './components/Navbar';
 
 function randomNotification() {
   const notifTitle = `This is a notification`;
@@ -55,7 +56,29 @@ function App() {
       duration: "15 MINUTES",
       time: "5PM",
       checked: false,
-    }
+    },
+    {
+      id: 2,
+      title: "meditate",
+      duration: "20 MINUTES",
+      time: "3PM",
+      checked: false,
+    },
+    {
+      id: 3,
+      title: "study",
+      duration: "45 MINUTES",
+      time: "1PM",
+      checked: false,
+    },
+    {
+      id: 4,
+      title: "test",
+      duration: "25 MINUTES",
+      time: "7PM",
+      checked: false,
+    },
+
   ]);
 
   const toggleCheck = (id) => {
@@ -67,6 +90,8 @@ function App() {
   const numerator = tasks.filter(task => task.checked).length;
   const denominator = tasks.length
   return (
+    <>
+    <Navbar/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
       <div className="flex justify-center">
         <ProgressBar numerator={numerator} denominator={denominator}/>
@@ -82,6 +107,8 @@ function App() {
       </div>
       
     </div>
+
+    </>
   )
 }
 
