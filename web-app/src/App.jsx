@@ -2,6 +2,7 @@ import { useState } from 'react'
 import TaskItem from "./components/TaskItem";
 import ProgressBar from "./components/ProgressBar";
 import Navbar from './components/Navbar';
+import BirdFrame from './components/BirdFrame';
 
 function randomNotification() {
   const notifTitle = `This is a notification`;
@@ -92,6 +93,7 @@ function App() {
   return (
     <>
     <Navbar/>
+    <BirdFrame birdState={'sad'}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
       <div className="flex justify-center">
       <ProgressBar numerator={numerator} denominator={denominator}/>
