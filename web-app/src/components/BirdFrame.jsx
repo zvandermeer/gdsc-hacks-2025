@@ -3,20 +3,19 @@ import BirdNormal from './birdcomponents/BirdNormal'
 import BirdSad from './birdcomponents/BirdSad'
 
 const BirdFrame = ({birdState}) =>{
+    let displayState = birdState;
 
-    if(!(birdState=='happy' || birdState=='sad' || birdState=='normal')){
-        birdState='normal'
+    if(!(displayState=='happy' || displayState=='sad' || displayState=='normal')){
+        displayState='normal'
     }
 
     return (
-    <>
-    <div style={{position:'absolute', top:225,left:100}}>
-        {birdState === 'happy' ? <BirdHappy/> : <></>}
-        {birdState === 'sad' ? <BirdSad/> : <></>}
-        {birdState === 'normal' ? <BirdNormal/> : <></>}
+    <div style={{position:'absolute', top:170,left:100}}>
+        {displayState === 'happy' && <BirdHappy/>}
+        {displayState === 'sad' && <BirdSad/>}
+        {displayState === 'normal' && <BirdNormal/>}
     </div>
-
-    </>)
+);
 };
 
 export default BirdFrame;
