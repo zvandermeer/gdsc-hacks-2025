@@ -4,7 +4,7 @@ import ProgressBar from "./components/ProgressBar";
 import Navbar from './components/Navbar';
 import BirdFrame from './components/BirdFrame';
 import ApiCalendar from "react-google-calendar-api";
-
+import NewPage from './components/NewPage'
 const gcalClientId = import.meta.env.VITE_GCAL_CLIENT_ID;
 const gcalApiKey = import.meta.env.VITE_GCAL_API_KEY;
 const birdStatus = 'normal';
@@ -123,6 +123,7 @@ function App() {
 
   return (
     <>
+    
     <Navbar/>
     <BirdFrame birdState={birdState}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
@@ -148,6 +149,10 @@ function App() {
       </div>
       
     </div>
+    
+
+    
+
     </>
   )
 }
