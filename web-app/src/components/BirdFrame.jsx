@@ -10,7 +10,7 @@ const BirdFrame = ({birdState}) =>{
     }
 
     return (
-    <div style={{position:'absolute', top:225,left:100}}>
+    <div style={{position:'absolute', top:170,left:100}}>
         {displayState === 'happy' && <BirdHappy/>}
         {displayState === 'sad' && <BirdSad/>}
         {displayState === 'normal' && <BirdNormal/>}
