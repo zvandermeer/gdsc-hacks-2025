@@ -96,12 +96,17 @@ function App() {
     <BirdFrame birdState={'sad'}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
       <div className="flex justify-center">
-      <ProgressBar numerator={numerator} denominator={denominator}/>
+        <ProgressBar numerator={numerator} denominator={denominator}/>
       </div>
-      <p className='text-xs ml-16 font-semibold'>today's progress</p>
-      {tasks.map(task => (
-        <TaskItem key={task.id} task={task} onChange={() => toggleCheck(task.id)} />
-      ))}
+      <p className='text-xs ml-16 font-semibold pb-2'>today's progress</p>
+      <div className="flex justify-center">      
+        <button type="button" className="text-black border-1 border-black font-medium text-sm w-20 rounded">Add a Task</button>
+      </div>
+      <div className="min-h-[210px] max-h-[210px] overflow-y-auto space-y-2">
+        {tasks.map(task => (
+          <TaskItem key={task.id} task={task} onChange={() => toggleCheck(task.id)} />
+        ))}
+      </div>
       
     </div>
 
