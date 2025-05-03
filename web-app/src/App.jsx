@@ -113,7 +113,7 @@ function App() {
   const handleBirdReaction = (task, event) => {
     if (!task.checked && event.target.checked) {
       setBirdState('happy');
-      setTimeout(() => setBirdState(birdStatus), 8000);
+      setTimeout(() => setBirdState(birdStatus), 6000);
     }
   };
   
