@@ -5,25 +5,23 @@ import closeOnClick from '../assets/closeOnClick.png';
 import Closebutton from './Closebutton';
 
 // for all new pages like settings and profile
-const NewPage = () => {
+const NewPage = ({children}) => {
 
   return (
 
     <div>
     
-      <div className="fixed w-full h-full bg-[#000000] px-6 py-2 z-1000 opacity-50 items-center">
-
+    <div className="fixed inset-0 bg-[#808080] opacity-70 z-10"></div>
         {/* W & H ARE WIDTH AND HEIGHT*/}
 
-        <div className="fixed bg-white w-[80%] h-[40%] rounded-lg right-[10%] top-[10%] px-2 py-2">
+        <div className="fixed bg-white border border-black w-[80%] h-[40%] right-[10%] top-[10%] z-20 px-2 py-2">
 
           <Closebutton defaultImage = {close} activeImage = {closeOnClick} />
-
-          <p className = "ml-3 mt-2 mb-2">TEXT TEXT TEXT TEXT TEXT TEXT TEXT</p>
+          
+          {children}
+          
   
         </div>
-
-      </div>
   
     </div>
 
