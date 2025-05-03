@@ -1,9 +1,10 @@
-function TaskItem({task, onChange}) {
+function TaskItem({task, onChange, onClick}) {
     return <div className='flex space-x-4 p-3 max-w-md'>
         <input
             type = "checkbox"
             checked ={task.checked}
             onChange = {onChange}
+            onClick = {onClick}
             className='border-4 border-black w-10 h-10 rounded-lg ml-11 accent-black'
         />
         <div>
