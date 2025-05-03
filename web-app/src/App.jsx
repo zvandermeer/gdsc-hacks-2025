@@ -4,7 +4,7 @@ import ProgressBar from "./components/ProgressBar";
 import Navbar from './components/Navbar';
 import BirdFrame from './components/BirdFrame';
 import ApiCalendar from "react-google-calendar-api";
-
+import NewPage from './components/NewPage'
 const gcalClientId = import.meta.env.VITE_GCAL_CLIENT_ID;
 const gcalApiKey = import.meta.env.VITE_GCAL_API_KEY;
 const birdStatus = 'normal';
@@ -113,12 +113,17 @@ function App() {
   const handleBirdReaction = (task, event) => {
     if (!task.checked && event.target.checked) {
       setBirdState('happy');
-      setTimeout(() => setBirdState(birdStatus), 8000);
+      setTimeout(() => setBirdState(birdStatus), 6000);
     }
   };
   
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
   return (
     <>
+    
     <Navbar/>
     <BirdFrame birdState={birdState}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
@@ -129,7 +134,13 @@ function App() {
       
       <div className="min-h-[210px] max-h-[210px] overflow-y-auto space-y-2">
         {tasks.map(task => (
-          <TaskItem key={task.id} task={task} onChange={() => toggleCheck(task.id)} onClick={(e) => handleBirdReaction(task, e)}/>
+          <TaskItem 
+          key={task.id} 
+          task={task} 
+          onChange={() => toggleCheck(task.id)} 
+          onClick={(e) => handleBirdReaction(task, e)}
+          onDelete={() => deleteTask(task.id)}
+          />
         ))}
       </div>
 
@@ -138,6 +149,10 @@ function App() {
       </div>
       
     </div>
+    
+
+    
+
     </>
   )
 }
