@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TaskItem from "./components/TaskItem";
 import ProgressBar from "./components/ProgressBar";
 import Navbar from './components/Navbar';
@@ -20,14 +20,12 @@ const gcalConfig = {
 
 const apiCalendar = new ApiCalendar(gcalConfig);
 
-function randomNotification() {
-  const notifTitle = `This is a notification`;
-  const notifBody = `Created by bob.`;
-  const options = {
-    body: notifBody,
-  };
-  new Notification(notifTitle, options);
-  // setTimeout(randomNotification, 30000);
+const apiURL = import.meta.env.VITE_API_URL;
+let uuid = getCookie("appUUID");
+
+if (uuid === undefined) {
+  uuid = crypto.randomUUID();
+  document.cookie = "appUUID=" + uuid + ";"
 }
 
 async function registerServiceWorker() {
@@ -37,7 +35,6 @@ async function registerServiceWorker() {
 
 async function subscribeUser(registration) {
   const publicVapidKey = import.meta.env.VITE_VAPID_PUBLIC;
-  const apiURL = import.meta.env.VITE_API_URL;
 
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
@@ -46,11 +43,29 @@ async function subscribeUser(registration) {
 
   await fetch(apiURL + '/subscribe', {
     method: 'POST',
-    body: JSON.stringify(subscription),
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      uuid: uuid,
+      subscription
+    })
   });
 
   console.log('User subscribed.');
+}
+
+async function scheduleNotification(title, body, time) {
+  await fetch(apiURL + '/schedule', {
+    method: 'POST',
+    body: JSON.stringify({
+      uuid: uuid,
+      time: time,
+      title: title,
+      body: body,
+    }),
+    headers: { 'Content-Type': 'application/json' }
+  });
+
+  alert("Notification scheduled!");
 }
 
 // Utility: Convert base64 to Uint8Array
@@ -64,6 +79,11 @@ function urlBase64ToUint8Array(base64String) {
   return new Uint8Array([...raw].map(char => char.charCodeAt(0)));
 }
 
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 function App() {
   const [tasks, setTasks] = useState([
