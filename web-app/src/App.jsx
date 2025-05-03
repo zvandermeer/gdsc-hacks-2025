@@ -7,6 +7,7 @@ import ApiCalendar from "react-google-calendar-api";
 
 const gcalClientId = import.meta.env.VITE_GCAL_CLIENT_ID;
 const gcalApiKey = import.meta.env.VITE_GCAL_API_KEY;
+const birdStatus = 'normal';
 
 const gcalConfig = {
   clientId: gcalClientId,
@@ -103,15 +104,24 @@ function App() {
     );
     setTasks(updatedTasks);
   };
+  
   const numerator = tasks.filter(task => task.checked).length;
   const denominator = tasks.length
+
+  const [birdState, setBirdState] = useState(birdStatus);
+
+  const handleBirdReaction = (task, event) => {
+    if (!task.checked && event.target.checked) {
+      setBirdState('happy');
+      setTimeout(() => setBirdState(birdStatus), 8000);
+    }
+  };
+  
   return (
     <>
     <Navbar/>
-
-    <BirdFrame birdState={'normal'}/>
-
-    <div className='flex flex-col justify-end min-h-screen'>
+    <BirdFrame birdState={birdState}/>
+    <div className='flex flex-col justify-end min-h-screen pb-4'>
       <div className="flex justify-center">
         <ProgressBar numerator={numerator} denominator={denominator}/>
       </div>
@@ -119,7 +129,7 @@ function App() {
       
       <div className="min-h-[210px] max-h-[210px] overflow-y-auto space-y-2">
         {tasks.map(task => (
-          <TaskItem key={task.id} task={task} onChange={() => toggleCheck(task.id)} />
+          <TaskItem key={task.id} task={task} onChange={() => toggleCheck(task.id)} onClick={(e) => handleBirdReaction(task, e)}/>
         ))}
       </div>
 
