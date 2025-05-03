@@ -93,7 +93,7 @@ function App() {
   return (
     <>
     <Navbar/>
-    <BirdFrame birdState={'sad'}/>
+    <BirdFrame birdState={'normal'}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
       <div className="flex justify-center">
         <ProgressBar numerator={numerator} denominator={denominator}/>
