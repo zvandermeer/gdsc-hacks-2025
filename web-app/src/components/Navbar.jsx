@@ -8,7 +8,7 @@ import calendarOnClick from '../assets/calendarOnClick.png';
 import logo from '../assets/logo.svg';
 import Navbutton from './Navbutton';
 
-const Navbar = ({ setSettingsMenu, setUserMenu }) => {
+const Navbar = ({ setSettingsMenu, setUserMenu, setEndMenu }) => {
 
   return (
 
@@ -36,7 +36,7 @@ const Navbar = ({ setSettingsMenu, setUserMenu }) => {
       </li>
 
       <li>
-        <Navbutton defaultImage={calendar} activeImage={calendarOnClick} />
+        <Navbutton defaultImage={calendar} activeImage={calendarOnClick} onClick ={() => setEndMenu(true)} />
       </li>
       
     </ul>

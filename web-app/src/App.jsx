@@ -114,8 +114,14 @@ function App() {
   
   const numerator = tasks.filter(task => task.checked).length;
   const denominator = tasks.length
-
+  const percentage = denominator > 0 ? (numerator / denominator) * 100 : 0;
   const [birdState, setBirdState] = useState(birdStatus);
+  let completionBirdState = 'normal';
+  if (percentage < 25) {
+    completionBirdState = 'sad';
+  } else if (percentage > 75) {
+    completionBirdState = 'happy';
+  }
 
   const handleBirdReaction = (task, event) => {
     if (!task.checked && event.target.checked) {
@@ -175,7 +181,7 @@ function App() {
   return (
     <>
     
-    <Navbar setSettingsMenu={setSettingsMenu} setUserMenu={setUserMenu}
+    <Navbar setSettingsMenu={setSettingsMenu} setUserMenu={setUserMenu} setEndMenu={setEndMenu}
     />
     <BirdFrame birdState={birdState}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
@@ -209,6 +215,21 @@ function App() {
     {/*{(endMenu || userMenu || settingsMenu || editItemMenu) && (
       <NewPage />
     )}*/}
+
+    {endMenu && (
+      <NewPage onClose={() => setEndMenu(false)} height="h-[80%]">
+        <h2 className="text-2xl font-bold text-center mb-4">Summary</h2>
+
+        <p className="text-center text-lg font-medium">
+          You’ve completed {Math.round(percentage)}% of your tasks!
+        </p>
+
+
+        <BirdFrame birdState={completionBirdState} />
+
+      </NewPage>
+    )}
+
     {editItemMenu && taskBeingEdited && (
       <NewPage onClose={() => setEditItemMenu(false)}>
         <h2 className="text-xl font-bold mb-2">Edit Task</h2>
