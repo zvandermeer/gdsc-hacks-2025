@@ -324,14 +324,15 @@ function App() {
 
     {settingsMenu && (
       <NewPage onClose={() => setSettingsMenu(false)}>
-        <h2 className="text-xl font-bold mb-2">Settings</h2>
-        <p>Settings content goes here.</p>
+        <h2 className="text-xl font-bold mb-2 mt-2 ml-1">Settings</h2>
+        <input type="time"></input>
+        
       </NewPage>
     )}
 
     {userMenu && (
       <NewPage onClose={() => setUserMenu(false)}>
-        <h2 className="text-3xl font-bold mb-2 mt-2">Profile</h2>
+        <h2 className="text-xl font-bold mb-2 mt-2 ml-1">Profile</h2>
         <div className="flex items-center gap-4 mt-2 mb-2">
           <button> <img src={calendar} className="w-24 h-auto" /> </button>
           <h2 className="text-xl font-bold">Link your Google Calendar</h2>
