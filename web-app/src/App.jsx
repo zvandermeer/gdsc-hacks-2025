@@ -118,6 +118,11 @@ function App() {
 
   ]);
 
+  const [addItemMenu, setAddItemMenu] = useState(false);
+  const [endMenu, setEndMenu] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
+  const [settingsMenu, setSettingsMenu] = useState(false);
+
   const toggleCheck = (id) => {
     const updatedTasks = tasks.map(task =>
       task.id === id ? { ...task, checked: !task.checked } : task
@@ -170,6 +175,9 @@ function App() {
       
     </div>
 
+    {(addItemMenu || endMenu || userMenu || settingsMenu) && (
+      <NewPage />
+    )}
     </>
   )
 }
