@@ -5,6 +5,9 @@ import Navbar from './components/Navbar';
 import BirdFrame from './components/BirdFrame';
 import ApiCalendar from "react-google-calendar-api";
 import NewPage from './components/NewPage'
+import './main.css';
+
+
 const gcalClientId = import.meta.env.VITE_GCAL_CLIENT_ID;
 const gcalApiKey = import.meta.env.VITE_GCAL_API_KEY;
 const birdStatus = 'normal';
