@@ -81,8 +81,6 @@ async function scheduleNotification(title, body, time) {
     }),
     headers: { 'Content-Type': 'application/json' }
   });
-
-  alert("Notification scheduled!");
 }
 
 // Utility: Convert base64 to Uint8Array
@@ -100,6 +98,19 @@ function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function formatDateToTimeInput(date) {
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
+function timeInputToDate(timeStr) {
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  const now = new Date();
+  now.setHours(hours, minutes, 0, 0); // sets hours, minutes, seconds, ms
+  return now;
 }
 
 function App() {
@@ -198,17 +209,13 @@ function App() {
     setNewTaskTime("");
     setAddItemMenu(false);
     }
+    
+    scheduleNotification("A reminder from Chirp! 🐥", "Don't forget to " + newTaskTitle + " soon!", timeInputToDate(newTaskTime));
   }
 
   const deleteTask = (id) => {
     setTasks(tasks.filter(task => task.id !== id));
-  };
-
-  function formatDateToTimeInput(date) {
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
-  }
+  };  
 
   return (
     <>
