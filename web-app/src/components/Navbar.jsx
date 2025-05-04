@@ -3,6 +3,8 @@ import profile from '../assets/profile.png';
 import profileOnClick from '../assets/profileOnClick.png';
 import settings from '../assets/settings.png';
 import settingsOnClick from '../assets/settingsOnClick.png';
+import calendar from '../assets/calendar.png';
+import calendarOnClick from '../assets/calendarOnClick.png';
 import logo from '../assets/logo.svg';
 import Navbutton from './Navbutton';
 
@@ -32,6 +34,11 @@ const Navbar = ({ setSettingsMenu, setUserMenu }) => {
       <li>
         <Navbutton defaultImage={profile} activeImage={profileOnClick} onClick={() => setUserMenu(true)} />
       </li>
+
+      <li>
+        <Navbutton defaultImage={calendar} activeImage={calendarOnClick} />
+      </li>
+      
     </ul>
 
   )
