@@ -171,13 +171,23 @@ function App() {
       </div>
 
       <div className="flex justify-center gap-3 mt-2 pt-4 pb-6 border-t">      
-        <button type="add-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded shadow-xs shadow-black">Add Task</button>
+        <button 
+        type="button" 
+        onClick={() => setAddItemMenu(true)}
+        className="text-black border-1 border-black font-medium text-sm w-23 rounded shadow-xs shadow-black">Add Task</button>
       </div>
       
     </div>
 
-    {(addItemMenu || endMenu || userMenu || settingsMenu || editItemMenu) && (
+    {/*{(endMenu || userMenu || settingsMenu || editItemMenu) && (
       <NewPage />
+    )}*/}
+
+    {addItemMenu && (
+      <NewPage onClose={() => setAddItemMenu(false)}>
+        <h2 className="text-xl font-bold mb-2">Add a New Task</h2>
+        <p>Put your form or inputs here.</p>
+      </NewPage>
     )}
     </>
   )
