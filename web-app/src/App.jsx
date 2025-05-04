@@ -102,7 +102,7 @@ function App() {
   const [newTaskTime, setNewTaskTime] = useState('');
   const [durationHours, setDurationHours] = useState("0");
   const [durationMinutes, setDurationMinutes] = useState("0");
-
+  const [taskBeingEdited, setTaskBeingEdited] = useState(null);
 
 
   const toggleCheck = (id) => {
@@ -125,6 +125,31 @@ function App() {
   };
   const pad = (val) => val.toString().padStart(2, '0');
   const formattedDuration = `${pad(durationHours)}:${pad(durationMinutes)}`;
+
+  const openEditTaskModal = (task) => {
+    setTaskBeingEdited(task);
+    const [h, m] = task.duration.split(":");
+    setDurationHours(h);
+    setDurationMinutes(m);
+    setEditItemMenu(true);
+  };
+  
+  const saveEditedTask = () => {
+    const formattedDuration = `${pad(durationHours)}:${pad(durationMinutes)}`;
+  
+    const updatedTask = {
+      ...taskBeingEdited,
+      duration: formattedDuration,
+    };
+  
+    const updatedTasks = tasks.map(task =>
+      task.id === updatedTask.id ? updatedTask : task
+    );
+  
+    setTasks(updatedTasks);
+    setEditItemMenu(false);
+    setTaskBeingEdited(null);
+  };
 
   const addNewTask = () => {
     if(newTaskTitle.trim()){
@@ -167,6 +192,7 @@ function App() {
           onChange={() => toggleCheck(task.id)} 
           onClick={(e) => handleBirdReaction(task, e)}
           onDelete={() => deleteTask(task.id)}
+          onEdit={() => openEditTaskModal(task)}
           />
         ))}
       </div>
@@ -183,6 +209,63 @@ function App() {
     {/*{(endMenu || userMenu || settingsMenu || editItemMenu) && (
       <NewPage />
     )}*/}
+    {editItemMenu && taskBeingEdited && (
+      <NewPage onClose={() => setEditItemMenu(false)}>
+        <h2 className="text-xl font-bold mb-2">Edit Task</h2>
+        <div className="space-y-4">
+          <input
+            className="border p-2 w-full"
+            value={taskBeingEdited.title}
+            onChange={(e) =>
+              setTaskBeingEdited({ ...taskBeingEdited, title: e.target.value })
+            }
+          />
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              min="0"
+              className="border p-2 w-16 text-center"
+              value={durationHours}
+              onChange={(e) => setDurationHours(e.target.value)}
+              placeholder="H"
+            />
+            <span className="text-xl">hours</span>
+            <input
+              type="number"
+              min="0"
+              max="59"
+              className="border p-2 w-16 text-center"
+              value={durationMinutes}
+              onChange={(e) => setDurationMinutes(e.target.value)}
+              placeholder="M"
+            />
+            <span className="text-xl">minutes</span>
+          </div>
+          <input
+            type="time"
+            className="border p-2 w-full"
+            value={taskBeingEdited.time}
+            onChange={(e) =>
+              setTaskBeingEdited({ ...taskBeingEdited, time: e.target.value })
+            }
+          />
+          <div className="flex justify-center gap-4">
+            <button
+              className="bg-black text-white px-4 py-2 rounded"
+              onClick={() => saveEditedTask(taskBeingEdited)}
+            >
+              Save
+            </button>
+            <button
+              className="bg-gray-300 text-black px-4 py-2 rounded"
+              onClick={() => setEditItemMenu(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </NewPage>
+    )}
 
     {addItemMenu && (
       <NewPage onClose={() => setAddItemMenu(false)}>
