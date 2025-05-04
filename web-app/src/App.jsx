@@ -32,6 +32,17 @@ if (uuid === undefined) {
   document.cookie = "appUUID=" + uuid + ";"
 }
 
+var subscribedToNotifications = false
+
+async function notificationRegister() {
+  if ('serviceWorker' in navigator && 'PushManager' in window && !subscribedToNotifications) {
+    const registration = await registerServiceWorker();
+    await subscribeUser(registration);
+  }
+}
+
+notificationRegister();
+
 async function registerServiceWorker() {
   const registration = await navigator.serviceWorker.register('/sw.js');
   return registration;
@@ -53,6 +64,8 @@ async function subscribeUser(registration) {
       subscription
     })
   });
+
+  subscribedToNotifications = true;
 
   console.log('User subscribed.');
 }
@@ -181,7 +194,7 @@ function App() {
   return (
     <>
     
-    <Navbar setSettingsMenu={setSettingsMenu} setUserMenu={setUserMenu} setEndMenu={setEndMenu}
+    <Navbar setSettingsMenu={setSettingsMenu} setUserMenu={setUserMenu} setEndMenu={setEndMenu} notificationRegister={notificationRegister}
     />
     <BirdFrame birdState={birdState}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
