@@ -103,7 +103,20 @@ function App() {
   const [durationHours, setDurationHours] = useState("0");
   const [durationMinutes, setDurationMinutes] = useState("0");
   const [taskBeingEdited, setTaskBeingEdited] = useState(null);
+  const [sleepTime, setSleepTime] = useState(null);
+  const [wakeTime, setWakeTime] = useState(null);
 
+  const handleRestTime = (dateTimeObject, setter) => {
+
+    const [hours, minutes] = dateTimeObject.split(':').map(Number);
+    const now = new Date();
+    now.setHours(hours);
+    now.setMinutes(minutes);
+    now.setSeconds(0);
+    now.setMilliseconds(0);
+    setter(new Date(now));
+
+  } 
 
   const toggleCheck = (id) => {
     const updatedTasks = tasks.map(task =>
@@ -323,20 +336,45 @@ function App() {
     )}
 
     {settingsMenu && (
+
       <NewPage onClose={() => setSettingsMenu(false)}>
+
         <h2 className="text-xl font-bold mb-2 mt-2 ml-1">Settings</h2>
+
         <div className="flex items-center gap-4 mt-2 mb-2">
-        <input type="time" className="border p-2 w-[75%]"></input>
+
+          <input 
+
+          type="time" 
+          className="border p-2 w-[75%]" 
+          value={sleepTime ? sleepTime.toTimeString().slice(0,5) : ''} 
+          onChange={(e) => handleRestTime(e.target.value, setSleepTime)}
+
+          />
+
           <h2 className="text-xl font-bold">Regular Sleep Time</h2>
+
         </div>
+
         <div className="flex items-center gap-4 mt-2 mb-2">
-        <input type="time" className="border p-2 w-[75%]"></input>
+
+          <input 
+
+          type="time" 
+          className="border p-2 w-[75%]" 
+          value={wakeTime ? wakeTime.toTimeString().slice(0,5) : ''} 
+          onChange={(e) => handleRestTime(e.target.value, setWakeTime)}
+
+          />
+
           <h2 className="text-xl font-bold">Regular Wake Time</h2>
-        </div>
-        
-        
+
+          </div>
+
       </NewPage>
-    )}
+      
+)}
+
 
     {userMenu && (
       <NewPage onClose={() => setUserMenu(false)}>
