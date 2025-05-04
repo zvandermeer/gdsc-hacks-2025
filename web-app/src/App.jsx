@@ -199,12 +199,20 @@ function App() {
             value={newTaskTime}
             onChange={(e) => setNewTaskTime(e.target.value)}
           />
+          <div className='flex justify-center gap-4 mt-2'>
           <button
             onClick={addNewTask}
             className="bg-black text-white px-4 py-2 rounded mt-2"
           >
             Add Task
           </button>
+          <button
+            className="bg-black text-white px-4 py-2 rounded mt-2"
+          >
+            Suggest
+          </button>
+          </div>
+          
         </div>
       </NewPage>
     )}
