@@ -89,43 +89,17 @@ function getCookie(name) {
 }
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "take a walk",
-      duration: "15 MINUTES",
-      time: "5PM",
-      checked: false,
-    },
-    {
-      id: 2,
-      title: "meditate",
-      duration: "20 MINUTES",
-      time: "3PM",
-      checked: false,
-    },
-    {
-      id: 3,
-      title: "study",
-      duration: "45 MINUTES",
-      time: "1PM",
-      checked: false,
-    },
-    {
-      id: 4,
-      title: "test",
-      duration: "25 MINUTES",
-      time: "7PM",
-      checked: false,
-    },
-
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   const [addItemMenu, setAddItemMenu] = useState(false);
   const [editItemMenu, setEditItemMenu] = useState(false);
   const [endMenu, setEndMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [settingsMenu, setSettingsMenu] = useState(false);
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [newTaskDuration, setNewTaskDuration] = useState('');
+  const [newTaskTime, setNewTaskTime] = useState('');
+
 
   const toggleCheck = (id) => {
     const updatedTasks = tasks.map(task =>
@@ -146,6 +120,23 @@ function App() {
     }
   };
   
+  const addNewTask = () => {
+    if(newTaskTitle.trim()){
+      const newTask = {
+      id: Date.now(),
+      title: newTaskTitle,
+      duration: newTaskDuration || "15 MINUTES",
+      time: newTaskTime || "12PM",
+      checked: false
+      }
+    setTasks([...tasks, newTask]);
+    setNewTaskTitle("");
+    setNewTaskDuration("");
+    setNewTaskTime("");
+    setAddItemMenu(false);
+    }
+  }
+
   const deleteTask = (id) => {
     setTasks(tasks.filter(task => task.id !== id));
   };
@@ -189,7 +180,32 @@ function App() {
     {addItemMenu && (
       <NewPage onClose={() => setAddItemMenu(false)}>
         <h2 className="text-xl font-bold mb-2">Add a New Task</h2>
-        <p>Put your form or inputs here.</p>
+        <div className="space-y-2">
+          <input
+            className="border p-2 w-full"
+            placeholder="Task Title"
+            value={newTaskTitle}
+            onChange={(e) => setNewTaskTitle(e.target.value)}
+          />
+          <input
+            className="border p-2 w-full"
+            placeholder="Duration (e.g. 30 MINUTES)"
+            value={newTaskDuration}
+            onChange={(e) => setNewTaskDuration(e.target.value)}
+          />
+          <input
+            className="border p-2 w-full"
+            placeholder="Time (e.g. 4PM)"
+            value={newTaskTime}
+            onChange={(e) => setNewTaskTime(e.target.value)}
+          />
+          <button
+            onClick={addNewTask}
+            className="bg-black text-white px-4 py-2 rounded mt-2"
+          >
+            Add Task
+          </button>
+        </div>
       </NewPage>
     )}
     </>
