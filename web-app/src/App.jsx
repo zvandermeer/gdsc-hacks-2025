@@ -31,6 +31,19 @@ if (uuid === undefined) {
   document.cookie = "appUUID=" + uuid + ";"
 }
 
+async function initNotifications() {
+  console.log("out")
+  if ('serviceWorker' in navigator && 'PushManager' in window && !notificationsEnabled) {
+    console.log("in")
+    const registration = await registerServiceWorker();
+    await subscribeUser(registration);
+  }
+}
+
+initNotifications()
+
+var notificationsEnabled = false
+
 async function registerServiceWorker() {
   const registration = await navigator.serviceWorker.register('/sw.js');
   return registration;
@@ -52,6 +65,8 @@ async function subscribeUser(registration) {
       subscription
     })
   });
+
+  notificationsEnabled = true
 
   console.log('User subscribed.');
 }
@@ -144,7 +159,7 @@ function App() {
   return (
     <>
     
-    <Navbar setSettingsMenu={setSettingsMenu} setUserMenu={setUserMenu}
+    <Navbar setSettingsMenu={setSettingsMenu} setUserMenu={setUserMenu} initNotifications={initNotifications}
     />
     <BirdFrame birdState={birdState}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
@@ -210,7 +225,7 @@ function App() {
           <button
             className="bg-black text-white px-4 py-2 rounded mt-2"
           >
-            Suggest
+            Suggest Time
           </button>
           </div>
           

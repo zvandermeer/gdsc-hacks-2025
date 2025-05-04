@@ -6,7 +6,7 @@ import settingsOnClick from '../assets/settingsOnClick.png';
 import logo from '../assets/logo.svg';
 import Navbutton from './Navbutton';
 
-const Navbar = ({ setSettingsMenu, setUserMenu }) => {
+const Navbar = ({ setSettingsMenu, setUserMenu, initNotifications }) => {
 
   return (
 
@@ -14,11 +14,7 @@ const Navbar = ({ setSettingsMenu, setUserMenu }) => {
       <li className="mr-auto">
         <div className="flex items-center gap-1">
           <button 
-          /* onMouseDown = {}
-          onMouseUp = {}
-          onTouchStart = {}
-          onTouchEnd = {} 
-          */
+          onClick={() => initNotifications()}
           ><img src={logo} className="w-8 h-auto object-contain"/></button>
           <h1 className="text-[#000000] text-xl ml-2">chirp</h1>
         </div>
