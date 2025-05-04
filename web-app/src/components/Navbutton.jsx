@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-const Navbutton = ({defaultImage, activeImage}) => {
+const Navbutton = ({defaultImage, activeImage, onClick }) => {
 
   const [isToggled, setIsToggled] = useState(false); 
 
@@ -9,14 +9,17 @@ const Navbutton = ({defaultImage, activeImage}) => {
 
   return (
     
-    <button onMouseDown={() => setIsToggled(true)}
-    onMouseUp={() => setIsToggled(false)}
-    onTouchStart={() => setIsToggled(true)}
-    onTouchEnd={() => setIsToggled(false)} className ="w-10 h-auto flex"> 
+    <button 
+      onMouseDown={() => setIsToggled(true)}
+      onMouseUp={() => { setIsToggled(false); if (onClick) onClick(); }} 
+      onTouchStart={() => setIsToggled(true)}
+      onTouchEnd={() => { setIsToggled(false); if (onClick) onClick();}}
+      className="w-10 h-auto flex"  
+      >
+        
+  <img src={isToggled ? activeImage : defaultImage} />
+</button>
 
-            <img src = { isToggled ? activeImage : defaultImage }></img> {/* creates a button component which has image parameter */}
-
-    </button>
     
   )
 }

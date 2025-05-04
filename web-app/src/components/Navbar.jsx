@@ -6,7 +6,7 @@ import settingsOnClick from '../assets/settingsOnClick.png';
 import logo from '../assets/logo.svg';
 import Navbutton from './Navbutton';
 
-const Navbar = () => {
+const Navbar = ({ setSettingsMenu, setUserMenu }) => {
 
   return (
 
@@ -14,16 +14,17 @@ const Navbar = () => {
       <li className="mr-auto">
         <div className="flex items-center gap-1">
           <img src={logo} alt="Logo" className="w-8 h-auto object-contain" />
-          <h1 className="text-[#000000] text-xl font-bold">chirp</h1>
+          <h1 className="text-[#000000] text-xl">chirp</h1>
         </div>
       </li>
     
       <li>
-        <Navbutton defaultImage={settings} activeImage={settingsOnClick} />
+        <Navbutton defaultImage={settings} activeImage={settingsOnClick} onClick={() => setSettingsMenu(true)} />
+
       </li>
     
       <li>
-        <Navbutton defaultImage={profile} activeImage={profileOnClick} />
+        <Navbutton defaultImage={profile} activeImage={profileOnClick} onClick={() => setUserMenu(true)} />
       </li>
     </ul>
 
