@@ -6,7 +6,7 @@ import settingsOnClick from '../assets/settingsOnClick.png';
 import logo from '../assets/logo.svg';
 import Navbutton from './Navbutton';
 
-const Navbar = () => {
+const Navbar = ({ setSettingsMenu, setUserMenu }) => {
 
   return (
 
@@ -19,11 +19,12 @@ const Navbar = () => {
       </li>
     
       <li>
-        <Navbutton defaultImage={settings} activeImage={settingsOnClick} />
+        <Navbutton defaultImage={settings} activeImage={settingsOnClick} onClick={() => setSettingsMenu(true)} />
+
       </li>
     
       <li>
-        <Navbutton defaultImage={profile} activeImage={profileOnClick} />
+        <Navbutton defaultImage={profile} activeImage={profileOnClick} onClick={() => setUserMenu(true)} />
       </li>
     </ul>
 

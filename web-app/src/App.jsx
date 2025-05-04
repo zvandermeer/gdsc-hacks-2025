@@ -150,7 +150,8 @@ function App() {
   return (
     <>
     
-    <Navbar/>
+    <Navbar setSettingsMenu={setSettingsMenu} setUserMenu={setUserMenu}
+    />
     <BirdFrame birdState={birdState}/>
     <div className='flex flex-col justify-end min-h-screen pb-4'>
       <div className="flex justify-center">
@@ -189,6 +190,21 @@ function App() {
         <p>Put your form or inputs here.</p>
       </NewPage>
     )}
+
+    {settingsMenu && (
+      <NewPage onClose={() => setSettingsMenu(false)}>
+        <h2 className="text-xl font-bold mb-2">Settings</h2>
+        <p>Settings content goes here.</p>
+      </NewPage>
+    )}
+
+    {userMenu && (
+      <NewPage onClose={() => setUserMenu(false)}>
+        <h2 className="text-xl font-bold mb-2">Profile</h2>
+        <p>Profile content goes here.</p>
+      </NewPage>
+    )}
+
     </>
   )
 }

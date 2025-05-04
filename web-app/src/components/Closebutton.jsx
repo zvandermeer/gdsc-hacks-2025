@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-const Closebutton = ({defaultImage, activeImage}) => {
+const Closebutton = ({defaultImage, activeImage, onClose}) => {
 
   const [isToggled, setIsToggled] = useState(false); 
 
@@ -10,9 +10,15 @@ const Closebutton = ({defaultImage, activeImage}) => {
   return (
     
     <button onMouseDown={() => setIsToggled(true)}
-    onMouseUp={() => setIsToggled(false)}
+    onMouseUp={() => {
+      setIsToggled(false);
+      if (onClose) onClose();
+    }}
     onTouchStart={() => setIsToggled(true)}
-    onTouchEnd={() => setIsToggled(false)} 
+    onTouchEnd={() => {
+      setIsToggled(false);
+      if (onClose) onClose();
+    }}
     
     className ="w-6 h-auto flex"> 
 
