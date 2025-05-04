@@ -100,6 +100,9 @@ function App() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskDuration, setNewTaskDuration] = useState('');
   const [newTaskTime, setNewTaskTime] = useState('');
+  const [durationHours, setDurationHours] = useState("0");
+  const [durationMinutes, setDurationMinutes] = useState("0");
+
 
 
   const toggleCheck = (id) => {
@@ -120,14 +123,16 @@ function App() {
       setTimeout(() => setBirdState(birdStatus), 6000);
     }
   };
-  
+  const pad = (val) => val.toString().padStart(2, '0');
+  const formattedDuration = `${pad(durationHours)}:${pad(durationMinutes)}`;
+
   const addNewTask = () => {
     if(newTaskTitle.trim()){
       const newTask = {
       id: Date.now(),
       title: newTaskTitle,
-      duration: newTaskDuration || "15 MINUTES",
-      time: newTaskTime || "12PM",
+      duration: formattedDuration,
+      time: newTaskTime || "12:00",
       checked: false
       }
     setTasks([...tasks, newTask]);
@@ -182,26 +187,41 @@ function App() {
     {addItemMenu && (
       <NewPage onClose={() => setAddItemMenu(false)}>
         <h2 className="text-xl font-bold mb-2">Add a New Task</h2>
-        <div className="space-y-2">
+        <div className="space-y-8">
           <input
             className="border p-2 w-full"
             placeholder="Task Title"
             value={newTaskTitle}
             onChange={(e) => setNewTaskTitle(e.target.value)}
           />
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              min="0"
+              className="border p-2 w-16 text-center"
+              value={durationHours}
+              onChange={(e) => setDurationHours(e.target.value)}
+              placeholder="H"
+            />
+            <span className="text-xl">hours  </span>
+            <input
+              type="number"
+              min="0"
+              max="59"
+              className="border p-2 w-16 text-center"
+              value={durationMinutes}
+              onChange={(e) => setDurationMinutes(e.target.value)}
+              placeholder="M"
+            />
+            <span className="text-xl">minutes</span>
+          </div>
           <input
+            type="time"
             className="border p-2 w-full"
-            placeholder="Duration (e.g. 30 MINUTES)"
-            value={newTaskDuration}
-            onChange={(e) => setNewTaskDuration(e.target.value)}
-          />
-          <input
-            className="border p-2 w-full"
-            placeholder="Time (e.g. 4PM)"
             value={newTaskTime}
             onChange={(e) => setNewTaskTime(e.target.value)}
           />
-          <div className='flex justify-center gap-4 mt-2'>
+          <div className='flex justify-center gap-4'>
           <button
             onClick={addNewTask}
             className="bg-black text-white px-4 py-2 rounded mt-2"
