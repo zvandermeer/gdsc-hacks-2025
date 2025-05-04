@@ -6,6 +6,7 @@ import BirdFrame from './components/BirdFrame';
 import ApiCalendar from "react-google-calendar-api";
 import NewPage from './components/NewPage'
 import './main.css';
+import calendar from './assets/calendar.png'; 
 
 
 const gcalClientId = import.meta.env.VITE_GCAL_CLIENT_ID;
@@ -227,8 +228,11 @@ function App() {
 
     {userMenu && (
       <NewPage onClose={() => setUserMenu(false)}>
-        <h2 className="text-xl font-bold mb-2">Profile</h2>
-        <p>Profile content goes here.</p>
+        <h2 className="text-3xl font-bold mb-2 mt-2">Profile</h2>
+        <div className="flex items-center gap-4 mt-2 mb-2">
+          <button> <img src={calendar} className="w-24 h-auto" /> </button>
+          <h2 className="text-xl font-bold">Link your Google Calendar</h2>
+        </div>
       </NewPage>
     )}
 
