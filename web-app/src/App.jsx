@@ -325,7 +325,15 @@ function App() {
     {settingsMenu && (
       <NewPage onClose={() => setSettingsMenu(false)}>
         <h2 className="text-xl font-bold mb-2 mt-2 ml-1">Settings</h2>
-        <input type="time"></input>
+        <div className="flex items-center gap-4 mt-2 mb-2">
+        <input type="time" className="border p-2 w-[75%]"></input>
+          <h2 className="text-xl font-bold">Regular Sleep Time</h2>
+        </div>
+        <div className="flex items-center gap-4 mt-2 mb-2">
+        <input type="time" className="border p-2 w-[75%]"></input>
+          <h2 className="text-xl font-bold">Regular Wake Time</h2>
+        </div>
+        
         
       </NewPage>
     )}
