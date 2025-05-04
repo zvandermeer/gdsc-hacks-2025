@@ -197,7 +197,7 @@ function App() {
         ))}
       </div>
 
-      <div className="flex justify-center gap-3 mt-2 pt-4 pb-6 border-t">      
+      <div className="flex justify-center gap-3 mt-2 pt-4 pb-6 border-t " style={{ boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1)' }}>      
         <button 
         type="button" 
         onClick={() => setAddItemMenu(true)}

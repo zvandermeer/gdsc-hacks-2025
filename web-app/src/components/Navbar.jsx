@@ -10,7 +10,7 @@ const Navbar = ({ setSettingsMenu, setUserMenu }) => {
 
   return (
 
-    <ul className="fixed w-full h-auto bg-[#FFFFFF] flex flex-row px-2 py-2 border-b border-black items-center gap-2">
+    <ul className="fixed w-full h-auto bg-[#FFFFFF] flex flex-row px-2 py-2 border-b border-black items-center gap-2 shadow-md">
       <li className="mr-auto">
         <div className="flex items-center gap-1">
           <button 
