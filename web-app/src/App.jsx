@@ -119,6 +119,7 @@ function App() {
   ]);
 
   const [addItemMenu, setAddItemMenu] = useState(false);
+  const [editItemMenu, setEditItemMenu] = useState(false);
   const [endMenu, setEndMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [settingsMenu, setSettingsMenu] = useState(false);
@@ -175,7 +176,7 @@ function App() {
       
     </div>
 
-    {(addItemMenu || endMenu || userMenu || settingsMenu) && (
+    {(addItemMenu || endMenu || userMenu || settingsMenu || editItemMenu) && (
       <NewPage />
     )}
     </>
