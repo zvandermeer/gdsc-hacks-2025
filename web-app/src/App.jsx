@@ -224,8 +224,8 @@ function App() {
           You’ve completed {Math.round(percentage)}% of your tasks!
         </p>
 
-        <div className="fixed inset-0 flex items-center justify-center z-30">
-          <div style={{ transform: "translate(-200px, -300px)" }}>
+        <div className="fixed flex items-center justify-center">
+          <div style={{ transform: "translate(-60px, -100px)" }}>
             <BirdFrame birdState={completionBirdState} />
           </div>
         </div>
