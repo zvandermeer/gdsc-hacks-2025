@@ -103,7 +103,20 @@ function App() {
   const [durationHours, setDurationHours] = useState("0");
   const [durationMinutes, setDurationMinutes] = useState("0");
   const [taskBeingEdited, setTaskBeingEdited] = useState(null);
+  const [sleepTime, setSleepTime] = useState(null);
+  const [wakeTime, setWakeTime] = useState(null);
 
+  const handleRestTime = (dateTimeObject, setter) => {
+
+    const [hours, minutes] = dateTimeObject.split(':').map(Number);
+    const now = new Date();
+    now.setHours(hours);
+    now.setMinutes(minutes);
+    now.setSeconds(0);
+    now.setMilliseconds(0);
+    setter(new Date(now));
+
+  } 
 
   const toggleCheck = (id) => {
     const updatedTasks = tasks.map(task =>
@@ -177,6 +190,13 @@ function App() {
   const deleteTask = (id) => {
     setTasks(tasks.filter(task => task.id !== id));
   };
+
+  function formatDateToTimeInput(date) {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+  
 
   return (
     <>
@@ -334,6 +354,37 @@ function App() {
           </button>
           <button
             className="bg-black text-white px-4 py-2 rounded mt-2"
+            onClick={() => {
+              // The user need to signIn with Handle AuthClick before
+              apiCalendar.listEvents({
+                timeMin: (new Date()).toISOString(),
+                showDeleted: false,
+                singleEvents: true,
+                maxResults: 10,
+                orderBy: 'startTime'
+              }).then(({ result }) => {
+                let lastItem;
+
+                for (const item of result.items) {
+                  if (lastItem !== undefined) {
+                    let timeDiff = ((new Date(item.start.dateTime) - new Date(lastItem.end.dateTime)) / 1000) / 60;
+
+                    console.log(item.start.dateTime)
+                    console.log(lastItem.end.dateTime)
+
+                    console.log(timeDiff)
+
+                    if (timeDiff > ((durationHours * 60)) + durationMinutes) {
+                      console.log("yay")
+                      setNewTaskTime(formatDateToTimeInput(new Date(lastItem.end.dateTime)))
+                    }
+                  }
+
+                  lastItem = item;
+                }
+                console.log(result.items);
+              });
+            }}
           >
             Suggest
           </button>
@@ -344,26 +395,53 @@ function App() {
     )}
 
     {settingsMenu && (
+
       <NewPage onClose={() => setSettingsMenu(false)}>
+
         <h2 className="text-xl font-bold mb-2 mt-2 ml-1">Settings</h2>
+
         <div className="flex items-center gap-4 mt-2 mb-2">
-        <input type="time" className="border p-2 w-[75%]"></input>
+
+          <input 
+
+          type="time" 
+          className="border p-2 w-[75%]" 
+          value={sleepTime ? sleepTime.toTimeString().slice(0,5) : ''} 
+          onChange={(e) => handleRestTime(e.target.value, setSleepTime)}
+
+          />
+
           <h2 className="text-xl font-bold">Regular Sleep Time</h2>
+
         </div>
+
         <div className="flex items-center gap-4 mt-2 mb-2">
-        <input type="time" className="border p-2 w-[75%]"></input>
+
+          <input 
+
+          type="time" 
+          className="border p-2 w-[75%]" 
+          value={wakeTime ? wakeTime.toTimeString().slice(0,5) : ''} 
+          onChange={(e) => handleRestTime(e.target.value, setWakeTime)}
+
+          />
+
           <h2 className="text-xl font-bold">Regular Wake Time</h2>
-        </div>
-        
-        
+
+          </div>
+
       </NewPage>
-    )}
+      
+)}
+
 
     {userMenu && (
       <NewPage onClose={() => setUserMenu(false)}>
         <h2 className="text-xl font-bold mb-2 mt-2 ml-1">Profile</h2>
         <div className="flex items-center gap-4 mt-2 mb-2">
-          <button> <img src={calendar} className="w-24 h-auto" /> </button>
+          <button
+            onClick={() => apiCalendar.handleAuthClick()}
+          > <img src={calendar} className="w-24 h-auto" /> </button>
           <h2 className="text-xl font-bold">Link your Google Calendar</h2>
         </div>
       </NewPage>
