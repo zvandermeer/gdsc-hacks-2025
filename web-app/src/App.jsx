@@ -185,6 +185,13 @@ function App() {
     setTasks(tasks.filter(task => task.id !== id));
   };
 
+  function formatDateToTimeInput(date) {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+  
+
   return (
     <>
     
@@ -326,6 +333,37 @@ function App() {
           </button>
           <button
             className="bg-black text-white px-4 py-2 rounded mt-2"
+            onClick={() => {
+              // The user need to signIn with Handle AuthClick before
+              apiCalendar.listEvents({
+                timeMin: (new Date()).toISOString(),
+                showDeleted: false,
+                singleEvents: true,
+                maxResults: 10,
+                orderBy: 'startTime'
+              }).then(({ result }) => {
+                let lastItem;
+
+                for (const item of result.items) {
+                  if (lastItem !== undefined) {
+                    let timeDiff = ((new Date(item.start.dateTime) - new Date(lastItem.end.dateTime)) / 1000) / 60;
+
+                    console.log(item.start.dateTime)
+                    console.log(lastItem.end.dateTime)
+
+                    console.log(timeDiff)
+
+                    if (timeDiff > ((durationHours * 60)) + durationMinutes) {
+                      console.log("yay")
+                      setNewTaskTime(formatDateToTimeInput(new Date(lastItem.end.dateTime)))
+                    }
+                  }
+
+                  lastItem = item;
+                }
+                console.log(result.items);
+              });
+            }}
           >
             Suggest
           </button>
@@ -380,7 +418,9 @@ function App() {
       <NewPage onClose={() => setUserMenu(false)}>
         <h2 className="text-xl font-bold mb-2 mt-2 ml-1">Profile</h2>
         <div className="flex items-center gap-4 mt-2 mb-2">
-          <button> <img src={calendar} className="w-24 h-auto" /> </button>
+          <button
+            onClick={() => apiCalendar.handleAuthClick()}
+          > <img src={calendar} className="w-24 h-auto" /> </button>
           <h2 className="text-xl font-bold">Link your Google Calendar</h2>
         </div>
       </NewPage>
