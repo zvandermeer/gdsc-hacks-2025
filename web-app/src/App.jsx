@@ -171,7 +171,7 @@ function App() {
       </div>
 
       <div className="flex justify-center gap-3 mt-2 pt-4 pb-6 border-t">      
-        <button type="add-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded">Add Task</button>
+        <button type="add-button" className="text-black border-1 border-black font-medium text-sm w-23 rounded shadow-xs shadow-black">Add Task</button>
       </div>
       
     </div>
