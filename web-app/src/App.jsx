@@ -270,7 +270,7 @@ function App() {
     {addItemMenu && (
       <NewPage onClose={() => setAddItemMenu(false)}>
         <h2 className="text-xl font-bold mb-2">Add a New Task</h2>
-        <div className="space-y-8">
+        <div className="space-y-4">
           <input
             className="border p-2 w-full"
             placeholder="Task Title"
