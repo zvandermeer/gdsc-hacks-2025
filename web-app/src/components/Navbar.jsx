@@ -13,8 +13,14 @@ const Navbar = ({ setSettingsMenu, setUserMenu }) => {
     <ul className="fixed w-full h-auto bg-[#FFFFFF] flex flex-row px-2 py-2 border-b border-black items-center gap-2">
       <li className="mr-auto">
         <div className="flex items-center gap-1">
-          <img src={logo} alt="Logo" className="w-8 h-auto object-contain" />
-          <h1 className="text-[#000000] text-xl">chirp</h1>
+          <button 
+          /* onMouseDown = {}
+          onMouseUp = {}
+          onTouchStart = {}
+          onTouchEnd = {} 
+          */
+          ><img src={logo} className="w-8 h-auto object-contain"/></button>
+          <h1 className="text-[#000000] text-xl ml-2">chirp</h1>
         </div>
       </li>
     
